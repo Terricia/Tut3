@@ -35,8 +35,8 @@ class Gaussian:
 
 def run_mcmc(d,begin_pos,nstep,scale=None):
     npar=begin_pos.size
-    parameter=np.zeros([nstep,nparam+1])
-    parameter[0,0:-1]=begin_pos
+    par=np.zeros([nstep,npar+1])
+    par[0,0:-1]=begin_pos
     current_chisquare=data.get_chisq(begin_pos)
     currrent_pos=start_pos.copy()
     if scale==None:
@@ -80,7 +80,7 @@ if __name__=='__main__':
 
     #short chain
     nstep=1000
-    chain,accept=run_mcmc(dat,guess,nstep,scale)
+    chain,accept=run_mcmc(d,guess,nstep,scale)
     q=np.round(0.2*nstep)
     chain=chain[q:,:]
     
@@ -94,9 +94,9 @@ if __name__=='__main__':
     print ("new accept is: ") + (repr(accept2))
     
     #compare
-    param_true=np.array([d.sig,d.amp,d.cent,d.offset])
-    for i in range(0,param_true.size):
+    par_true=np.array([d.sig,d.amp,d.cent,d.offset])
+    for i in range(0,par_true.size):
         num=np.mean(chain[:,i])
-        scat=np.std(chain[:,i])
-        print ([param_true[i],num,scat])
+        s=np.std(chain[:,i])
+        print ([par_true[i],num,s])
 
