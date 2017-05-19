@@ -1,4 +1,30 @@
 #Terricia Govender
 #212505648
-#Tut3:Q3
+#Tut3: Question 3
 
+import numpy
+from matplotlib import pylab as plt
+
+def _sincos_mat(npt=100,order=10):
+    
+    x_vec=numpy.arange(0,npt)/(0.0+npt)*2*numpy.pi
+    m=numpy.zeros((npt,2*order-1))
+    m[:,0]=1.0
+    for j in range(1,order):
+        m[:,2*j-1]=numpy.cos(j*x_vec)
+        m[:,2*j]=-numpy.sin(j*x_vec)
+    return numpy.matrix(m)
+
+if __name__=='__main__':
+    n=100
+    order=5
+    data=numpy.random.randn(n)
+    m=get_sincos_mat(n,order)
+    #we take the fft before the transpose
+    ft=numpy.fft.fft(data)
+    
+    data=numpy.matrix(data).transpose()
+    fitpoly=numpy.linalg.inv(mat.transpose()*mat)*(mat.transpose()*data)
+ 
+    delta=numpy.complex(fitpoly[5],fitpoly[6])-ft[3]/(0.5*n)
+    print (repr(delta))
